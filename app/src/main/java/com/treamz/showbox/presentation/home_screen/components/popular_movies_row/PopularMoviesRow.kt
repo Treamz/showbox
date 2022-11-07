@@ -14,14 +14,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import com.treamz.showbox.presentation.components.MovieCard
-import com.treamz.showbox.presentation.navigation.graphs.DetailsScreen
 
 
 @Composable
 fun PopularMoviesRow(
     onClick: (movieId: Int) -> Unit,
     onClickPopularMovies: () -> Unit,
-    popularMovieRowViewModel: PopularMovieRowViewModel = hiltViewModel()
+    popularMovieRowViewModel: PopularMovieRowViewModel
 ) {
     val popularMovie = popularMovieRowViewModel.state.value.popularMovies.collectAsLazyPagingItems()
     Column() {

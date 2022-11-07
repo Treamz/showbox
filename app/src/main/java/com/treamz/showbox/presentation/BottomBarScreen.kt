@@ -22,6 +22,14 @@ sealed class BottomBarScreen(
         route = "PROFILE",
         title = "PROFILE",
         icon = Icons.Default.Person
+
+    )
+
+    object Auth : BottomBarScreen(
+        route = "AUTH",
+        title = "AUTH",
+        icon = Icons.Default.Person
+
     )
 
     object Settings : BottomBarScreen(

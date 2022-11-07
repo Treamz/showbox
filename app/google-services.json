@@ -1,0 +1,108 @@
+{
+  "project_info": {
+    "project_number": "903288091550",
+    "firebase_url": "https://horizon-4bdae.firebaseio.com",
+    "project_id": "horizon-4bdae",
+    "storage_bucket": "horizon-4bdae.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:903288091550:android:28e6adac8215086e519c8f",
+        "android_client_info": {
+          "package_name": "app.movie.movie_horizon"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "903288091550-dfb20s5h8em4ii5qmgtu0sgsangm7qr4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.movie.movie_horizon",
+            "certificate_hash": "0cf53280b0ddca12347a6625b65b500774b1718e"
+          }
+        },
+        {
+          "client_id": "903288091550-iomm9fqnh4li79au7rhlum0jakclcra3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.movie.movie_horizon",
+            "certificate_hash": "f024fbd9dfe21d9bc70101b31e79ee6cd7043925"
+          }
+        },
+        {
+          "client_id": "903288091550-tfa41plo5inj2hm7tqrd02cn76dijkb2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBRnz3iE6bDAE0kD7O1tJ7mypI9fqAiCxA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "903288091550-tfa41plo5inj2hm7tqrd02cn76dijkb2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "903288091550-grjvsdnl9cvaeaq991gt6k7qkco69e7e.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "to.hrzn.app"
+              }
+            }
+          ]
+        }
+      },
+      "admob_app_id": "ca-app-pub-5518386226495736~3986121168"
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:903288091550:android:320941a0bafef81d519c8f",
+        "android_client_info": {
+          "package_name": "com.treamz.showbox"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "903288091550-1f9obuvc8lobf0maphc7l6fdff84ccvn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.treamz.showbox",
+            "certificate_hash": "79319ab3dad16a46a0d6d53a6f542b16a19a399c"
+          }
+        },
+        {
+          "client_id": "903288091550-tfa41plo5inj2hm7tqrd02cn76dijkb2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBRnz3iE6bDAE0kD7O1tJ7mypI9fqAiCxA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "903288091550-tfa41plo5inj2hm7tqrd02cn76dijkb2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "903288091550-grjvsdnl9cvaeaq991gt6k7qkco69e7e.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "to.hrzn.app"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

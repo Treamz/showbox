@@ -7,6 +7,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -14,6 +15,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.treamz.showbox.presentation.BottomBarScreen
+import com.treamz.showbox.presentation.auth_screen.AuthViewModel
 import com.treamz.showbox.presentation.navigation.graphs.HomeNavGraph
 
 
@@ -26,17 +28,19 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
 //            Text(text = "SHOWBOX", modifier = Modifier.padding(start = 5.dp), style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 23.sp))
 //        }
         Box(modifier = Modifier.padding(it)) {
-            HomeNavGraph(navController = navController)        }
+            HomeNavGraph(navController = navController)
+        }
 
     }
 }
 
 
 @Composable
-fun BottomBar(navController: NavHostController) {
+fun BottomBar(navController: NavHostController, authViewModel: AuthViewModel = hiltViewModel()) {
+
     val screens = listOf(
         BottomBarScreen.Home,
-        BottomBarScreen.Profile,
+        if (authViewModel.isUserAuthenticated) BottomBarScreen.Profile else BottomBarScreen.Auth,
         BottomBarScreen.Settings,
         BottomBarScreen.Search,
     )

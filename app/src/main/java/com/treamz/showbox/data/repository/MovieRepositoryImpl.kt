@@ -1,6 +1,7 @@
 package com.treamz.showbox.data.repository
 
 import com.treamz.showbox.common.Constants
+import com.treamz.showbox.data.preferences.PrefRepository
 import com.treamz.showbox.data.remote.TheMovieDBApi
 import com.treamz.showbox.data.remote.dto.movie_details.MovieDetailsDto
 import com.treamz.showbox.data.remote.dto.movie_disover.MovieListDto
@@ -8,7 +9,8 @@ import com.treamz.showbox.domain.repository.MovieRepository
 import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(
-    private val theMovieDBApi: TheMovieDBApi
+    private val theMovieDBApi: TheMovieDBApi,
+    private val prefRepository: PrefRepository
 ) : MovieRepository {
     override suspend fun getMovieDiscover(
         language: String,
@@ -18,9 +20,9 @@ class MovieRepositoryImpl @Inject constructor(
         with_watch_monetization_types: Boolean,
         page: Int
     ): MovieListDto {
-        return theMovieDBApi.getDiscover(
+        return theMovieDBApi.getDiscoverMovies(
             apiKey = Constants.TMDB_API_KEY,
-            language = language,
+            language = prefRepository.getLanguage().code,
             sort_by = sort_by,
             include_adult = include_adult,
             include_video = include_video,
@@ -33,7 +35,7 @@ class MovieRepositoryImpl @Inject constructor(
         return theMovieDBApi.getPopularMovies(
             apiKey = Constants.TMDB_API_KEY,
             page = page,
-            language = language
+            language = prefRepository.getLanguage().code
         )
     }
 
@@ -41,14 +43,14 @@ class MovieRepositoryImpl @Inject constructor(
         return theMovieDBApi.getTopRatedMovies(
             apiKey = Constants.TMDB_API_KEY,
             page = page,
-            language = language
+            language = prefRepository.getLanguage().code
         )
     }
 
     override suspend fun getMovieDetails(movieId: String, language: String): MovieDetailsDto {
         return theMovieDBApi.getMovieDetails(
             apiKey = Constants.TMDB_API_KEY,
-            language = language,
+            language = prefRepository.getLanguage().code,
             movieId = movieId
         )
     }

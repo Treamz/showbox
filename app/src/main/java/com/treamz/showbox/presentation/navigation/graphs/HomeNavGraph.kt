@@ -2,8 +2,9 @@ package com.treamz.showbox.presentation.navigation.graphs
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavBackStackEntry
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -12,9 +13,18 @@ import androidx.navigation.navigation
 
 
 import com.treamz.showbox.presentation.BottomBarScreen
+import com.treamz.showbox.presentation.auth_screen.AuthScreen
 import com.treamz.showbox.presentation.home_screen.HomeTab
+import com.treamz.showbox.presentation.home_screen.components.popular_movies_row.PopularMovieRowViewModel
+import com.treamz.showbox.presentation.home_screen.components.popular_shows_row.PopularShowsRowViewModel
+import com.treamz.showbox.presentation.home_screen.components.top_rated_movie_row.TopRatedMovieRowViewModel
+import com.treamz.showbox.presentation.home_screen.components.top_rated_shows_row.TopRatedShowsRowViewModel
 import com.treamz.showbox.presentation.movie_details.MovieDetailsScreen
 import com.treamz.showbox.presentation.popular_movies_screen.PopularMoviesScreen
+import com.treamz.showbox.presentation.profile_screen.ProfileScreen
+import com.treamz.showbox.presentation.screens.settings_screen.SettingsScreen
+import com.treamz.showbox.presentation.search_screen.SearchScreen
+import com.treamz.showbox.presentation.show_details.ShowDetailsScreen
 
 @Composable
 fun HomeNavGraph(navController: NavHostController) {
@@ -24,29 +34,49 @@ fun HomeNavGraph(navController: NavHostController) {
         startDestination = BottomBarScreen.Home.route
     ) {
         composable(route = BottomBarScreen.Home.route) {
-            HomeTab(navController = navController)
+            val popularMovieRowViewModel = hiltViewModel<PopularMovieRowViewModel>()
+            val topRatedMovieRowViewModel = hiltViewModel<TopRatedMovieRowViewModel>()
+            val popularShowsRowViewModel = hiltViewModel<PopularShowsRowViewModel>()
+            val topRatedShowsRowViewModel = hiltViewModel<TopRatedShowsRowViewModel>()
+
+            HomeTab(
+                navController = navController,
+                popularMovieRowViewModel,
+                topRatedMovieRowViewModel,
+                popularShowsRowViewModel,
+                topRatedShowsRowViewModel
+            )
 
         }
         composable(route = BottomBarScreen.Profile.route) {
-//            ScreenContent(
-//                "",
-//                name = BottomBarScreen.Profile.route,
-//                onClick = { }
-//            )
+            ProfileScreen() {
+                navController.popBackStack()
+                navController.navigate(BottomBarScreen.Auth.route)
+            }
+        }
+        composable(route = BottomBarScreen.Auth.route) {
+            AuthScreen(
+                navigateToProfileScreen = {
+
+//                    navController.navigate(BottomBarScreen.Profile.route)
+                }
+            )
         }
         composable(route = BottomBarScreen.Settings.route) {
-//            ScreenContent(
-//                "",
-//                name = BottomBarScreen.Settings.route,
-//                onClick = { }
-//            )
+            SettingsScreen()
         }
-        detailsNavGraph(navController = navController)
+
+        composable(route = BottomBarScreen.Search.route) {
+            SearchScreen(navController)
+        }
+
+        detailsMoviesNavGraph(navController = navController)
+        detailsShowsNavGraph(navController = navController)
     }
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
-fun NavGraphBuilder.detailsNavGraph(navController: NavHostController) {
+fun NavGraphBuilder.detailsMoviesNavGraph(navController: NavHostController) {
     navigation(
         route = "movieDetails/{movieId}",
         startDestination = DetailsScreen.Information.route,
@@ -62,6 +92,13 @@ fun NavGraphBuilder.detailsNavGraph(navController: NavHostController) {
 //                navController.navigate(DetailsScreen.Overview.route)
 //            }
             MovieDetailsScreen(paramId = navBackStackEntry.arguments?.getString("id") ?: "")
+        }
+
+        composable(
+            route = DetailsScreen.InformationShow.route,
+            arguments = listOf()
+        ) { navBackStackEntry ->
+            ShowDetailsScreen(paramId = navBackStackEntry.arguments?.getString("id") ?: "")
         }
         composable(route = DetailsScreen.Player.route) {
 //            SourceChooser()
@@ -88,7 +125,43 @@ fun NavGraphBuilder.detailsNavGraph(navController: NavHostController) {
 
 sealed class DetailsScreen(val route: String) {
     object Information : DetailsScreen(route = "INFORMATION")
+    object InformationShow : DetailsScreen(route = "INFORMATIONTV")
     object DiscoverMovies : DetailsScreen(route = "DISCOVER_MOVIES")
     object Player : DetailsScreen(route = "PLAYER")
     object PopularMovies : DetailsScreen(route = "POPULAR_MOVIES")
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
+fun NavGraphBuilder.detailsShowsNavGraph(navController: NavHostController) {
+    navigation(
+        route = "showDetails/{movieId}",
+        startDestination = DetailsScreen.InformationShow.route,
+    ) {
+        composable(
+            route = DetailsScreen.InformationShow.route,
+            arguments = listOf()
+        ) { navBackStackEntry ->
+            ShowDetailsScreen(paramId = navBackStackEntry.arguments?.getString("id") ?: "")
+        }
+        composable(route = DetailsScreen.Player.route) {
+//            SourceChooser()
+//            ScreenContent(
+//                "",
+//                name = DetailsScreen.Player.route
+//            ) {
+//                navController.popBackStack(
+//                    route = DetailsScreen.Information.route,
+//                    inclusive = false
+//                )
+//            }
+        }
+        composable(route = DetailsScreen.DiscoverMovies.route) {
+//            MovieDiscover(navController = navController)
+        }
+        composable(route = DetailsScreen.PopularMovies.route) {
+            PopularMoviesScreen(onClick = {
+                navController.navigate("movieDetails/$it")
+            })
+        }
+    }
 }

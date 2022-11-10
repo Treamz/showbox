@@ -11,6 +11,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.treamz.showbox.R
 import com.treamz.showbox.common.Constants
@@ -77,7 +79,7 @@ class AppModule {
     fun provideShowsRepository(
         theMovieDBApi: TheMovieDBApi, prefRepository: PrefRepository
     ): TvRepository {
-        return TvRepositoryImpl(theMovieDBApi,prefRepository)
+        return TvRepositoryImpl(theMovieDBApi, prefRepository)
     }
 
 
@@ -87,7 +89,7 @@ class AppModule {
         theMovieDBApi: TheMovieDBApi,
         prefRepository: PrefRepository
     ): MultiSearchRepository {
-        return MultiSearchRepositoryImpl(theMovieDBApi,prefRepository)
+        return MultiSearchRepositoryImpl(theMovieDBApi, prefRepository)
     }
 
 
@@ -97,9 +99,8 @@ class AppModule {
         return PrefRepository(context = context)
     }
 
-
     @Provides
-    fun provideFirebaseAuth() = Firebase.auth
+    fun provideFirebaseFirestore() : FirebaseFirestore = Firebase.firestore
 
 
     @Provides
@@ -117,7 +118,8 @@ class AppModule {
                 .setSupported(true)
                 .setServerClientId(app.getString(R.string.web_client_id))
                 .setFilterByAuthorizedAccounts(true)
-                .build())
+                .build()
+        )
         .setAutoSelectEnabled(true)
         .build()
 
@@ -131,7 +133,8 @@ class AppModule {
                 .setSupported(true)
                 .setServerClientId(app.getString(R.string.web_client_id))
                 .setFilterByAuthorizedAccounts(false)
-                .build())
+                .build()
+        )
         .build()
 
     @Provides
@@ -148,30 +151,39 @@ class AppModule {
         options: GoogleSignInOptions
     ) = GoogleSignIn.getClient(app, options)
 
-    @Provides
-    fun provideAuthRepository(
-        auth: FirebaseAuth,
-        oneTapClient: SignInClient,
-        @Named(SIGN_IN_REQUEST)
-        signInRequest: BeginSignInRequest,
-        @Named(SIGN_UP_REQUEST)
-        signUpRequest: BeginSignInRequest,
-    ): AuthRepository = AuthRepositoryImpl(
-        auth = auth,
-        oneTapClient = oneTapClient,
-        signInRequest = signInRequest,
-        signUpRequest = signUpRequest,
-    )
+//    @Provides
+//    @Singleton
+//    fun provideAuthRepository(
+//        auth: FirebaseAuth,
+//        oneTapClient: SignInClient,
+//        @Named(SIGN_IN_REQUEST)
+//        signInRequest: BeginSignInRequest,
+//        @Named(SIGN_UP_REQUEST)
+//        signUpRequest: BeginSignInRequest,
+//        theMovieDBApi: TheMovieDBApi,
+//        db: FirebaseFirestore
+//
+//    ): AuthRepository = AuthRepositoryImpl(
+//        auth = auth,
+//        oneTapClient = oneTapClient,
+//        signInRequest = signInRequest,
+//        signUpRequest = signUpRequest,
+//        theMovieDBApi = theMovieDBApi,
+//        db = db
+//
+//    )
+
 
     @Provides
-    fun provideProfileRepository(
-        auth: FirebaseAuth,
-        oneTapClient: SignInClient,
-        signInClient: GoogleSignInClient,
-    ): ProfileRepository = ProfileRepositoryImpl(
-        auth = auth,
-        oneTapClient = oneTapClient,
-        signInClient = signInClient,
-    )
+    fun provideFirebaseAuth(): FirebaseAuth = FirebaseAuth.getInstance()
 
+//    @Provides
+//    fun provideFirebaseFirestore(): FirebaseFirestore = Firebase.firestore
+
+    @Provides
+    fun providesAuthRepository(impl: AuthRepositoryImpl): AuthRepository = impl
+
+    @Provides
+    fun provideProfileRepository(impl: ProfileRepositoryImpl): ProfileRepository =
+        impl
 }

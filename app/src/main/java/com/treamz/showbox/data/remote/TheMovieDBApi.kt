@@ -1,5 +1,6 @@
 package com.treamz.showbox.data.remote
 
+import com.treamz.showbox.data.remote.dto.guest_session.TMDBGuestSessionDto
 import com.treamz.showbox.data.remote.dto.movie_details.MovieDetailsDto
 import com.treamz.showbox.data.remote.dto.movie_disover.MovieListDto
 import com.treamz.showbox.data.remote.dto.multi_search.MultiSearchDto
@@ -84,6 +85,11 @@ interface TheMovieDBApi {
         @Query("query") query: String,
         @Query("include_adult") include_adult : Boolean
     ): MultiSearchDto
+
+    @GET("/3/authentication/guest_session/new")
+    suspend fun generateGuestSession(
+        @Query("api_key") apiKey: String,
+    ): TMDBGuestSessionDto
 
 
 }

@@ -3,14 +3,13 @@ package com.treamz.showbox.presentation.screens.settings_screen.components.langu
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Card
-import androidx.compose.material.DropdownMenu
-import androidx.compose.material.DropdownMenuItem
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewModelScope
@@ -25,6 +24,9 @@ fun LanguageChooser(languageChooserViewModel: LanguageChooserViewModel = hiltVie
     val items = listOf(Language(name = "Ukraine", code = "uk-UA"),Language(name = "English", code = "en-US"))
     var selectedIndex by remember { mutableStateOf(items.indexOf(state.pickedLanguage)) }
     val gson = Gson()
+    val configuration = LocalConfiguration.current
+    val screenWidth = configuration.screenWidthDp.dp
+
     state.let {
         Card(
             modifier = Modifier
@@ -40,11 +42,10 @@ fun LanguageChooser(languageChooserViewModel: LanguageChooserViewModel = hiltVie
                 expanded = expanded,
                 onDismissRequest = { expanded = false },
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(10.dp)
+                    .width(screenWidth-10.dp)
                     .background(
-                        Color.Gray
-                    )
+                        MaterialTheme.colors.primary
+                    ).padding(10.dp)
             ) {
                 items.forEachIndexed { index, s ->
                     DropdownMenuItem(onClick = {

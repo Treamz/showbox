@@ -9,6 +9,7 @@ object Constants {
     const val SIGN_IN_REQUEST = "signInRequest"
     const val SIGN_UP_REQUEST = "signUpRequest"
     const val USERS = "users"
+    const val USERS_SESSIONS = "users_sessions"
 
     const val AUTH_SCREEN = "Authentication"
     //Buttons

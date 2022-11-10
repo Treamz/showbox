@@ -21,13 +21,7 @@ fun SettingsScreen() {
     LazyColumn(modifier = Modifier.fillMaxWidth()) {
         item {
             LanguageChooser()
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(10.dp)
-            ) {
-                Text(text = "Language", modifier = Modifier.padding(20.dp))
-            }
+
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
